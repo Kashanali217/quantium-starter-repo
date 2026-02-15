@@ -8,10 +8,10 @@ data = pd.read_csv("data/pink_morsels_data.csv")
 data = data.sort_values(by="date")
 
 # Initialize Dash
-dash_app = Dash(__name__)
+app = Dash(__name__)
 
 # Define the app layout
-dash_app.layout = html.Div([
+app.layout = html.Div([
     # Header
     html.H1(
         "Pink Morsel Visualizer",
@@ -30,7 +30,7 @@ dash_app.layout = html.Div([
     html.Div([
         html.Label("Select Region:", style={'fontWeight': 'bold', 'marginRight': '10px'}),
         dcc.RadioItems(
-            id='region-radio',
+            id='region-picker',
             options=[
                 {'label': 'North', 'value': 'north'},
                 {'label': 'East', 'value': 'east'},
@@ -51,9 +51,9 @@ dash_app.layout = html.Div([
 ])
 
 # Callback to update graph based on region selection
-@dash_app.callback(
+@app.callback(
     Output('visualization', 'figure'),
-    Input('region-radio', 'value')
+    Input('region-picker', 'value')
 )
 def update_chart(selected_region):
     if selected_region == 'all':
@@ -73,4 +73,4 @@ def update_chart(selected_region):
 
 # Run the app
 if __name__ == '__main__':
-    dash_app.run(debug=True)
+    app.run(debug=True)
